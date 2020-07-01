@@ -1,0 +1,21 @@
+﻿<div class="table-responsive" id="tblUser" ng-app="userApp" ng-controller="userCtrl">
+    <h1>User List</h1>
+    <table class="table">
+        <tr>
+            <th>User ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Website</th>
+            <th>Company</th>
+        </tr>
+        <tr ng-repeat="oUser in users">
+            <td>{{ oUser.id }}</td>
+            <td>{{ oUser.name }}</td>
+            <td>{{ oUser.email }}</td>
+            <td>{{ oUser.phone }}</td>
+            <td>{{ oUser.website }}</td>
+            <td>{{ oUser.company.name }}</td>
+        </tr>
+    </table>
+</div>

@@ -2,3 +2,11 @@
     ViewBag.Title = "Single Page Application";
 }
 
+<div>
+    @Html.Partial("_UserList")
+</div>
+
+@section scripts{ 
+    <script type="text/javascript" src="@Url.Content("~/Scripts/angular.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/angularfunction.js")"></script>
+}
