@@ -1,4 +1,4 @@
-﻿<div class="table-responsive" id="tblUser" ng-app="userApp" ng-controller="userCtrl">
+﻿<div class="table-responsive" id="tblUser" ng-controller="userCtrl" ng-show="show == 'user'">
     <h1>User List</h1>
     <table class="table">
         <tr>
@@ -8,6 +8,7 @@
             <th>Phone</th>
             <th>Website</th>
             <th>Company</th>
+            <th>Action</th>
         </tr>
         <tr ng-repeat="oUser in users">
             <td>{{ oUser.id }}</td>
@@ -16,6 +17,7 @@
             <td>{{ oUser.phone }}</td>
             <td>{{ oUser.website }}</td>
             <td>{{ oUser.company.name }}</td>
+            <td><a href="javascript:void(0);" ng-click="viewPost(oUser.id);">Posts</a> &nbsp; <a href="javascript:void(0);" ng-click="viewAlbum(oUser.id);">Albums</a></td>
         </tr>
     </table>
 </div>
