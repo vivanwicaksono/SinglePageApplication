@@ -1,5 +1,8 @@
 ﻿<div class="table-responsive" id="tblAlbums" ng-controller="albumCtrl" ng-show="show == 'album'">
-    <h1>Post List</h1>
+    <div class="breadcrumb">
+        <a href="javascript:void(0)" ng-click="show = 'user'">Users</a> > Album list
+    </div>
+    <h1>Album List</h1>
     <table class="table">
         <tr>
             <th>ID</th>

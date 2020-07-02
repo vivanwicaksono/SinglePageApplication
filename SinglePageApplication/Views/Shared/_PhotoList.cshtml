@@ -1,0 +1,20 @@
+﻿<div class="table-responsive" id="listphotos" ng-controller="photoCtrl" ng-show="show == 'photo'">
+    <div class="breadcrumb">
+        <a href="javascript:void(0)" ng-click="show = 'user'">Users</a> > Photos
+    </div>
+    <h1>Photo Galery</h1>
+    <div>
+        <div class="row">
+            <div class="col-md-4" ng-repeat="oPhoto in photos | orderBy : 'title'">
+                <div class="thumbnail" style="height: 250px;">
+                    <a href="{{ oPhoto.url }}">
+                        <img src="{{ oPhoto.thumbnailUrl }}" alt="Lights" style="width:150px; height: 150px;">
+                        <div class="caption">
+                            <p>{{ oPhoto.title }}</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
