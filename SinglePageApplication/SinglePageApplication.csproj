@@ -219,6 +219,7 @@
     <Content Include="Views\Shared\_AlbumList.cshtml" />
     <Content Include="Views\Shared\_PhotoList.cshtml" />
     <Content Include="Views\Shared\_PostDetail.cshtml" />
+    <Content Include="Views\Shared\_PostForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

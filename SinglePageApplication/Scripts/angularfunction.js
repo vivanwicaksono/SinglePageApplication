@@ -110,14 +110,33 @@ app.factory("PostDetailService", function ($http) {
         return promises;
     }
 
+    function getComment() {
+        var sUrl = "";
+        sUrl = "https://jsonplaceholder.typicode.com/posts/" + iPostID + "/comments/";
+
+        var promises = $http({
+            method: 'get',
+            url: sUrl,
+        });
+        promises.then(function (response) {
+            return response.data;
+        }).catch(function (error) {
+            var errDetail = 'error:' + error.status;
+            throw errDetail;
+        });
+        return promises;
+    }
+
     return {
         setPostDetail: setPostDetail,
-        getPostDetail: getPostDetail
+        getPostDetail: getPostDetail,
+        getComment: getComment
     };
 });
 
 app.run(function ($rootScope) {
     $rootScope.show = 'user';
+    $rootScope.typePostDetail = 'view';
 });
 
 app.controller('userCtrl', function ($scope, $rootScope, $http, PostService, AlbumService) {
@@ -147,17 +166,97 @@ app.controller('postCtrl', function ($scope, $rootScope, $http, PostService, Pos
         PostDetailService.setPostDetail(pPostID);
         $rootScope.show = 'postdetail';
     }
+
+    $scope.addPostDetail = function () {
+        PostDetailService.setPostDetail('0');
+        $rootScope.show = 'postform';
+        $rootScope.typePostDetail = 'add';
+    }
+
+    $scope.editPostDetail = function (pPostID) {
+        PostDetailService.setPostDetail(pPostID);
+        $rootScope.show = 'postform';
+        $rootScope.typePostDetail = 'edit';
+    }
+
+    $scope.deletePost = function (pPostID, pPostTitle) {
+        if (confirm("Are you sure to delete " + pPostTitle + "?")) {
+            fetch('https://jsonplaceholder.typicode.com/posts/' + pPostID, {
+                method: 'DELETE',
+            }).then(function () { alert("Post deleted."); });
+        }
+    }
 });
 
 app.controller('postDetailCtrl', function ($scope, $rootScope, $http, PostService, PostDetailService) {
     $scope.$watch('show', function () {
         $scope.postdetail = [];
+        $scope.comments = [];
         PostDetailService.getPostDetail().then(function (value) {
             $scope.postdetail = value.data;
+            PostDetailService.getComment().then(function (value) {
+                $scope.comments = value.data;
+            }).catch(function (error) {
+                var errDetail = 'error:' + error.status;
+            });
         }).catch(function (error) {
             var errDetail = 'error:' + error.status;
         });
     });
+});
+
+app.controller('postFormCtrl', function ($scope, $rootScope, $http, PostService, PostDetailService) {
+    $scope.$watch('show', function () {
+        if ($rootScope.typePostDetail == 'add') {
+            $scope.postform = {
+                "title" : "",
+                "body": "",
+                "id": "0",
+                "userId": "1",
+            };
+            $scope.postformtitle = "Add Post";
+        } else if ($rootScope.typePostDetail == 'edit') {
+            PostDetailService.getPostDetail().then(function (value) {
+                $scope.postform = value.data;
+                $scope.postformtitle = "Edit Post";
+            });
+        }
+    });
+
+    $scope.savePost = function (pPostID) {
+        if ($rootScope.typePostDetail == 'add') {
+            var oData = JSON.stringify({
+                userid: parseInt($("#userID").val()),
+                title: $("#title").val(),
+                body: $("#bodyarea").val()
+            });
+            fetch('https://jsonplaceholder.typicode.com/posts/',  {
+                method: 'POST',
+                body: oData,
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            })
+            .then(response => response.json())
+            .then(json => alert("data added.\n" + JSON.stringify(json)));
+        } else {
+            var oData = JSON.stringify({
+                id: parseInt($("#postID").val()),
+                userid: parseInt($("#userID").val()),
+                title: $("#title").val(),
+                body: $("#bodyarea").val()
+            });
+            fetch('https://jsonplaceholder.typicode.com/posts/' + $("#postID").val(), {
+                method: 'PUT',
+                body: oData,
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            })
+            .then(response => response.json())
+            .then(json => alert("data edited.\n" + JSON.stringify(json)));
+        }
+    }
 });
 
 app.controller('albumCtrl', function ($scope, $rootScope, $http, AlbumService, PhotoService) {

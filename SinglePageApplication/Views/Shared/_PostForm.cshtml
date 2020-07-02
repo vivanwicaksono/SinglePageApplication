@@ -1,0 +1,17 @@
+﻿<div class="container" id="PostFormWrap" ng-controller="postFormCtrl" ng-show="show == 'postform'">
+    <br/>
+    <form>
+        <h2>{{ postformtitle }}</h2>
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" id="title" value="{{ postform.title }}"/>
+        </div>
+        <div class="form-group">
+            <label for="bodyarea">Body</label>
+            <textarea class="form-control" id="bodyarea" rows="3">{{ postform.body }}</textarea>
+        </div>
+        <input type="hidden" id="postID" value="{{ postform.id }}" />
+        <input type="hidden" id="userID" value="{{ postform.userId }}" />
+        <button type="submit" class="btn btn-primary mb-2" ng-click="savePost()">Save Post</button>
+    </form>
+</div>

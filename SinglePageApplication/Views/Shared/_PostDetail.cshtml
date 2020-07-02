@@ -4,4 +4,26 @@
         <br/>
         <p>{{ postdetail.body }}</p>
     </div>
+
+    <br/>
+    <h2>Comments</h2>
+    <h5>Comments add, edit, delete have not developed yet.</h5>
+    <br />
+    <a href="javascript:void(0);" ng-click="addComment(oPost.id);">Add Comments</a>
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>Body</th>
+            <th>Action</th>
+        </tr>
+        <tr ng-repeat="oComment in comments">
+            <td>{{ oComment.id }}</td>
+            <td>{{ oComment.body }}</td>
+            <td>
+                <a href="javascript:void(0);" ng-click="editComment(oComment.id);">Edit</a>
+                &nbsp;
+                <a href="javascript:void(0);" ng-click="deleteComment(oComment.id);">Delete</a>
+            </td>
+        </tr>
+    </table>
 </div>
